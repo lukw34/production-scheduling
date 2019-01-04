@@ -1,0 +1,25 @@
+
+{
+  "extends": ["eslint:recommended", "airbnb"],
+  "env": {
+    "es6": true
+  },
+  "plugins": [
+    "react",
+    "jsx-a11y"
+  ],
+  "globals": {
+    "document": true
+  },
+  "rules": {
+    "max-len": [0],
+    "eol-last": [0],
+    "comma-dangle": [0],
+    "react/jsx-filename-extension": [0],
+    "import/no-extraneous-dependencies": ["warn", {"devDependencies": true}],
+    "indent": ["error", 2, { "SwitchCase": 1 }]
+  },
+  "parserOptions": {
+    "ecmaVersion": 6
+  }
+}
