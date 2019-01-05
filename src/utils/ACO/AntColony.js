@@ -3,19 +3,21 @@ import Ant from './Ant';
 
 class AntColony {
   graph = new Graph();
+
   colony = [];
-  
+
   params = {
     alpha: 1,
     beta: 3,
     rho: 0.1,
     q: 1,
-    initPheromone: this.params.q,
+    initPheromone: 1,
     maxIterations: 250,
     colonySize: 20
   };
 
   iterationBest = null;
+
   globalBest = null;
 
   constructor(params) {
@@ -35,12 +37,12 @@ class AntColony {
     this.resetAnts();
     this.colony.forEach(ant => ant.run());
   };
-  
+
   resetAnts = () => {
     this.createAnts();
     this.iterationBest = null;
   };
-  
+
   createAnts = () => {
     const { alpha, beta, q } = this.params;
     this.colony = [...new Array(this.params.colonySize)].map(() => new Ant('task', this.graph, {

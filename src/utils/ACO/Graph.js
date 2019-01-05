@@ -7,6 +7,12 @@ class Graph {
     this.data.set(nodeName, []);
   };
 
+  addNodeWithAllPossibleEsges = (nodeName) => {
+    const allNodes = [...this.data.keys()];
+    this.addNode(nodeName);
+    allNodes.forEach(node => this.addEdge(node, nodeName));
+  }
+
   addEdge = (src, destination) => {
     this.data.get(src).push(new Edge(src, destination));
     this.data.get(destination).push(new Edge(destination, src));
