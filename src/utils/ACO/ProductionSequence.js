@@ -1,9 +1,10 @@
 class ProductionSequence {
   makespan = 50;
+
   maxSize;
 
   productionSequence = [];
-  
+
   constructor(maxSize) {
     this.maxSize = maxSize;
   }
@@ -18,8 +19,8 @@ class ProductionSequence {
   contains = task => this.productionSequence.filter(taskInProduction => taskInProduction.isEqual(task)).length > 0;
 
   getMakeSpan = () => this.makespan;
-  
-  isFull = maxSize => this.productionSequence.length
+
+  isFull = () => this.productionSequence.length >= this.maxSize;
 }
 
 export default ProductionSequence;

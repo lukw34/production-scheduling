@@ -22,7 +22,11 @@ class Edge {
 
   addPheromone = (extraPheromone) => {
     this.pheromone += extraPheromone;
-  }
+  };
+
+  getSrcTaskTime = () => this.src.addTaskTime();
+
+  isEqualDestination = destinationToCheck => this.destination.isEqual(destinationToCheck);
 }
 
 export default Edge;
