@@ -634,38 +634,17 @@ var AntColony = (function () {
             edges[edgeIndex].setPheromone(pheromone * (1 - this._rho));
         }
 
-        if (this._type == 'maxmin') {
-            if ((this._iteration / this._maxIterations) > 0.75) {
-                var best = this.getGlobalBest();
-            } else {
-                var best = this.getIterationBest();
-            }
 
-            // Set maxmin
-            this._maxPheromone = this._q / best.getTour().distance();
-            this._minPheromone = this._maxPheromone * this._minScalingFactor;
-
-            best.addPheromone();
-        } else {
             for (var antIndex in this._colony) {
                 this._colony[antIndex].addPheromone();
             }
-        }
+
 
         if (this._type == 'elitist') {
             this.getGlobalBest().addPheromone(this._elitistWeight);
         }
 
-        if (this._type == 'maxmin') {
-            for (var edgeIndex in edges) {
-                var pheromone = edges[edgeIndex].getPheromone();
-                if (pheromone > this._maxPheromone) {
-                    edges[edgeIndex].setPheromone(this._maxPheromone);
-                } else if (pheromone < this._minPheromone) {
-                    edges[edgeIndex].setPheromone(this._minPheromone);
-                }
-            }
-        }
+
     };
 
     AntColony.prototype.getIterationBest = function() {

@@ -7,24 +7,24 @@ class Edge {
 
   destination;
 
-  time;
-
-  constructor(src, destination, initialPheromone = 1) {
+  constructor(src, destination, initialPheromone = 0.4) {
     this.initialPheromone = initialPheromone;
     this.pheromone = initialPheromone;
     this.src = src;
     this.destination = destination;
   }
 
-  getTime = () => this.time;
+  getDestinationTask = () => this.destination;
 
   getPheromone = () => this.pheromone;
 
-  addPheromone = (extraPheromone) => {
-    this.pheromone += extraPheromone;
+  addPheromone = (modifyPheromone) => {
+    this.pheromone = modifyPheromone(this.pheromone);
   };
 
   getSrcTaskTime = () => this.src.addTaskTime();
+
+  getDestinationTaskTime = () => this.destination.addTaskTime();
 
   isEqualDestination = destinationToCheck => this.destination.isEqual(destinationToCheck);
 }

@@ -14,7 +14,7 @@ class Task {
   getId = () => this.id;
 
   addTaskTime = (previousTime = 0) => previousTime + this.time;
-
+  
   isEqual = candidate => candidate === this.id;
 }
 

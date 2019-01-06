@@ -12,6 +12,12 @@ class Ant {
 
   qParameter;
 
+  nodesNotYetVisited = [];
+
+  nodesAllowedToVisit = [];
+
+  nodesAlreadyVisited = [];
+
   constructor(currentTask, graph, { alpha, beta, q } = {}) {
     this.productionSequence = new ProductionSequence(graph.getSize());
     this.currentTask = currentTask;
@@ -22,27 +28,34 @@ class Ant {
   }
 
 
+  getTour = () => this.productionSequence.getMakeSpan();
+  
   run = () => {
     while (!this.isSequenceFound()) {
       this.nextMove();
     }
+
+    this.productionSequence.print();
   };
 
   isSequenceFound = () => this.productionSequence.isFull();
 
+  getProductionSequence = () => this.productionSequence;
 
-  nextMove = (tasks) => {
+  nextMove = () => {
+    const tasks = this.graph.getNodes();
     const uncheckedTasks = tasks
-      .filter(task => this.productionSequence.contains(task));
+      .filter(task => !this.productionSequence.contains(task))
+      .map(task => this.graph.getEdge(this.currentTask.getId(), task))
+      .filter(edge => !!edge);
     const probabilities = uncheckedTasks
-      .map(task => this.graph.getEdge(this.currentTask, task))
-      .map(edge => this.calculateProbability(edge.getPheromone(), edge.getTime()));
+      .map(edge => this.calculateProbability(edge.getPheromone(), edge.getDestinationTaskTime()));
     const wheelTarget = getWheelTarget(probabilities);
     let wheelPosition = 0.0;
     for (let i = 0; i < uncheckedTasks.length; i += 1) {
       wheelPosition += probabilities[i];
       if (wheelPosition >= wheelTarget) {
-        const newCurrentTask = uncheckedTasks[i];
+        const newCurrentTask = uncheckedTasks[i].getDestinationTask();
         this.currentTask = newCurrentTask;
         this.productionSequence.addTask(newCurrentTask);
         return;
@@ -53,7 +66,10 @@ class Ant {
   addPheromone = (weight = 1) => {
     const extraPheromone = (this.qParameter * weight) / this.productionSequence.getMakeSpan();
     this.productionSequence.processSequence((task, index, arr) => {
-      this.graph.getEdge(index, (index + 1) % arr.length).addPheromone(extraPheromone);
+      const edge = this.graph.getEdge(task.getId(), arr[(index + 1) % arr.length].getId());
+      if (edge) {
+        edge.addPheromone(pheromone => pheromone + extraPheromone);
+      }
     });
   };
 }

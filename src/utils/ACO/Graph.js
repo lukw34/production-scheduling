@@ -16,9 +16,9 @@ class Graph {
     allNodes.forEach(node => this.addEdge(node, nodeName));
   };
 
-  addEdge = (src, destination, time) => {
+  addEdge = (src, destination) => {
     this.edgeCount += 1;
-    this.data.get(src.getId()).push(new Edge(src, destination, time));
+    this.data.get(src.getId()).push(new Edge(src, destination));
   };
 
   addBidirectionalEdge = (src, destination) => {
@@ -26,9 +26,11 @@ class Graph {
     this.addEdge(destination, src);
   };
 
+  getEdges = () => [...this.data.entries()].reduce((prev, [_, edges]) => [...prev, ...edges], []);
+
   getEdgeCount = () => this.edgeCount;
 
-  getEdge = (src, destination) => this.data.get(src).filter(edge => edge.isEqualDestination(destination))[0] || null;;
+  getEdge = (src, destination) => this.data.get(src).filter(edge => edge.isEqualDestination(destination))[0] || null;
 
   getSize = () => this.data.size;
 
