@@ -7,13 +7,13 @@ class AntColony {
   colony = [];
 
   params = {
-    alpha: 0.4,
-    beta: 3,
+    alpha: 0.5,
+    beta: 0.2,
     rho: 0.1,
-    q: 1,
-    initPheromone: 1,
-    maxIterations: 200,
-    colonySize: 200,
+    q: 0.3,
+    initPheromone: 0.6,
+    maxIterations: 50,
+    colonySize: 300,
     elitistWeight: 0
   };
 
@@ -29,10 +29,8 @@ class AntColony {
 
   run = () => {
     for (let i = 0; i < this.params.maxIterations; i += 1) {
-      console.log(i)
       this.step(i);
     }
-    console.log('aasd')
     return this.globalBest.getTour();
   };
 
@@ -46,14 +44,17 @@ class AntColony {
     this.graph.getEdges()
       .forEach(edge => edge.addPheromone(pheromone => pheromone * (1 - this.params.rho)));
     this.colony.forEach(ant => ant.addPheromone());
-    this.getGlobalBest().addPheromone(this.params.elitistWeight);
+    const gb = this.getGlobalBest();
+    if (gb) {
+      gb.addPheromone(this.params.elitistWeight);
+    }
   };
 
 
   getIterationBest = () => {
-    const [best] = this.colony;
-    return this.colony.reduce((prev, act) => {
-      if (prev.getTour() < act.getTour()) {
+    const [best] = this.colony.filter(ant => !!ant.getTour());
+    return this.colony.filter(ant => !!ant.getTour()).reduce((prev, act) => {
+      if (prev.getTour() > act.getTour()) {
         return act;
       }
       return best;
@@ -62,10 +63,10 @@ class AntColony {
 
   getGlobalBest = () => {
     const bestAnt = this.getIterationBest();
-    if (this.globalBest === null || this.globalBest.getTour() < bestAnt.getTour()) {
+    if (!!bestAnt.getTour() && (this.globalBest === null || this.globalBest.getTour() > bestAnt.getTour())) {
       this.globalBest = bestAnt;
     }
-    
+
     return this.globalBest;
   };
 

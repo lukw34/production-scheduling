@@ -5,29 +5,29 @@ class ProductionSequence {
 
   productionSequence = [];
 
-  isFinish = false;
+  makespanCount = [];
 
   constructor(maxSize) {
     this.maxSize = maxSize;
   }
 
   addTask = (task) => {
-    if (task.getId() === 'finish') {
-      this.isFinish = true;
+    const taskMakespan = task.getMakespan();
+    if (taskMakespan > this.makespan) {
+      this.makespanCount.push(taskMakespan);
+      this.makespan = taskMakespan;
     }
 
-    this.makespan = task.addTaskTime(this.makespan);
     this.productionSequence = [...this.productionSequence, task];
   };
 
-
-  processSequence = callback => this.productionSequence.forEach(callback);
+  processSequence = (callback, method = 'forEach') => this.productionSequence[method](callback);
 
   contains = task => this.productionSequence.filter(taskInProduction => taskInProduction.isEqual(task)).length > 0;
 
   getMakeSpan = () => this.makespan;
 
-  isFull = () => this.isFinish || this.productionSequence.length >= this.maxSize;
+  isFull = () => this.productionSequence.length >= this.maxSize;
 
   print = () => {
     // console.log(this.productionSequence.reduce((prev, act) => `${prev}; ${act.getId()}`), '');

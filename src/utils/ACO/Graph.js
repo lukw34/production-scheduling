@@ -10,12 +10,6 @@ class Graph {
     this.data.set(nodeName, []);
   };
 
-  addNodeWithAllPossibleEsges = (nodeName) => {
-    const allNodes = [...this.data.keys()];
-    this.addNode(nodeName);
-    allNodes.forEach(node => this.addEdge(node, nodeName));
-  };
-
   addEdge = (src, destination) => {
     this.edgeCount += 1;
     this.data.get(src.getId()).push(new Edge(src, destination));
@@ -26,28 +20,29 @@ class Graph {
     this.addEdge(destination, src);
   };
 
-  getEdges = () => [...this.data.entries()].reduce((prev, [_, edges]) => [...prev, ...edges], []);
+  getEdges = () => [...this.data.entries()].reduce((prev, [, edges]) => [...prev, ...edges], []);
 
   getEdgeCount = () => this.edgeCount;
 
   getEdge = (src, destination) => this.data.get(src).filter(edge => edge.isEqualDestination(destination))[0] || null;
 
+  getEdgesFromNode = nodeName => [...this.data.get(nodeName)];
+
   getSize = () => this.data.size;
 
   getNodes = () => [...this.data.keys()];
 
+  getAllEdges = () => [].concat(...[...this.data.entries()].map(([, el]) => el));
 
   static startNode = new Task('start-0', 0, null);
 
-  static finishNode = new Task('finish', 0, null);
 
   static parseOneJob = (tasks, graph) => {
-    const lastSrc = tasks.reduce((srcTask, task) => {
+    tasks.reduce((srcTask, task) => {
       graph.addNode(task.getId());
       graph.addEdge(srcTask, task);
       return task;
     }, Graph.startNode);
-    graph.addEdge(lastSrc, Graph.finishNode);
   };
 
   static connectTaskOnTheSameMachine = (graph, machineIds, tasks) => {
@@ -67,7 +62,6 @@ class Graph {
     const graph = new Graph();
     const machineIds = new Set();
     const tasksObj = {};
-    graph.addNode(Graph.finishNode.getId());
     graph.addNode(Graph.startNode.getId());
     Object.keys(dataSet).forEach((key) => {
       const tasks = dataSet[key]

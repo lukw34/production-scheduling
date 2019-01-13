@@ -5,6 +5,8 @@ class Task {
 
   machine;
 
+  makespan = 0;
+
   constructor(id, time, machine) {
     this.time = time;
     this.id = id;
@@ -14,8 +16,28 @@ class Task {
   getId = () => this.id;
 
   addTaskTime = (previousTime = 0) => previousTime + this.time;
-  
-  isEqual = candidate => candidate === this.id;
+
+  setMakespan = (makespan) => {
+    this.makespan += makespan;
+  };
+
+  resetMakespan = () => {
+    this.makespan = 0;
+  };
+
+  getMakespan = () => this.makespan + this.time;
+
+  isEqual = (candidate) => {
+    if (typeof candidate === 'string' || candidate instanceof String) {
+      return candidate === this.id;
+    }
+
+    if (candidate instanceof RegExp) {
+      return this.id.match(candidate);
+    }
+
+    return candidate.getId() === this.id;
+  }
 }
 
 export default Task;
