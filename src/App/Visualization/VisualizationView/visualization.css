@@ -1,0 +1,11 @@
+.boxVisualization {
+     position: relative; 
+    /* display: inline; */
+    color: aliceblue;
+    background-color: #505160;
+    height: auto;
+    width: auto;
+    padding: 50px;
+    /* top: 150px; */
+    overflow-x: auto;
+}

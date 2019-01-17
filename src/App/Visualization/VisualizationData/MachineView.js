@@ -1,27 +1,36 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import TaskInMachineView from './TaskInMachineView';
-import './machineView.css';
+import '../VisualizationView/MachineView.css';
 
 class MachineView extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            name: props.name,
-            taskInMachineList: props.taskInMachineList
-        }
-    }
-    render() {
-        const taskList = this.state.taskInMachineList.map((task) =>
-            <TaskInMachineView name={task.name} timeStart={task.timeStart} duration={task.duration} />);
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: props.name,
+      taskInMachineList: props.taskInMachineList
+    };
+  }
 
-        return (
-            <div>
-                Name = {this.state.name}<br />
-                {taskList}
-            </div>
-        );
+  render() {
+    // eslint-disable-next-line react/destructuring-assignment
+    const taskList = this.state.taskInMachineList.map(task => <TaskInMachineView name={task.name} timeStart={task.timeStart} duration={task.duration} generatedColor={task.generatedColor} />);
 
-    }
+
+    return (
+      <div className="boxMachine">
+        <h1 className="machineTitle">
+          {this.state.name}
+        </h1>
+        <div className="allTaskBox tooltip">{taskList}</div>
+
+
+      </div>
+    );
+  }
 }
-
+MachineView.propTypes = {
+  taskInMachineList: PropTypes.array.isRequired,
+  name: PropTypes.string.isRequired
+};
 export default MachineView;

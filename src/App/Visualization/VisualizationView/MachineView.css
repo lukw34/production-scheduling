@@ -1,0 +1,15 @@
+.machineTitle{
+    margin: 0 5px 10px 0 ;
+    padding: 5px 5px 5px 5px;
+    display: inline-block;
+}
+
+.boxMachine{
+    margin:0;
+
+}
+
+.allTaskBox {
+    display: inline;
+    position: absolute;
+}
