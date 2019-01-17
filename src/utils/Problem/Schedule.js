@@ -1,16 +1,29 @@
-class ProductionSequence {
+class Schedule {
   makespan = 0;
 
   maxSize;
 
-  productionSequence = [];
+  leftSchedule = [];
 
+  rightSchedule = [];
+  
+  productionSequence = []
+  
   makespanCount = [];
 
   constructor(maxSize) {
     this.maxSize = maxSize;
   }
 
+  
+  addToScheduleFromLeft = (job) => {
+    this.leftSchedule = [...this.leftSchedule, job];
+  };
+  
+  addToScheduleFromRight = (job) => {
+    this.leftSchedule = [job, ...this.rightSchedule];
+  };
+  
   addTask = (task) => {
     const taskMakespan = task.getMakespan();
     if (taskMakespan > this.makespan) {
@@ -35,4 +48,4 @@ class ProductionSequence {
   }
 }
 
-export default ProductionSequence;
+export default Schedule;

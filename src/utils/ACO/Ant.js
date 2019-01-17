@@ -1,6 +1,6 @@
-import ProductionSequence from './ProductionSequence';
+import ProductionSequence from '../Problem/Schedule';
 import { probabilityCalculator, getWheelTarget } from './calculations';
-import Graph from './Graph';
+import Graph from '../Problem/Graph';
 
 class Ant {
   calculateProbability;

@@ -1,5 +1,5 @@
 import AntColony from './AntColony';
-import Graph from './Graph';
+import Graph from '../Problem/Graph';
 
 export default (data) => {
   const colony = new AntColony(Graph.generateDisjunctiveGraph(data));

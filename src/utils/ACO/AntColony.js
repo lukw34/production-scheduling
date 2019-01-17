@@ -1,4 +1,4 @@
-import Graph from './Graph';
+import Graph from '../Problem/Graph';
 import Ant from './Ant';
 
 class AntColony {

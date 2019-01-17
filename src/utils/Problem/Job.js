@@ -1,4 +1,4 @@
-class Task {
+class Job {
   id;
 
   time;
@@ -15,7 +15,7 @@ class Task {
 
   getId = () => this.id;
 
-  addTaskTime = (previousTime = 0) => previousTime + this.time;
+  getTime = () => this.time;
 
   setMakespan = (makespan) => {
     this.makespan += makespan;
@@ -40,4 +40,4 @@ class Task {
   }
 }
 
-export default Task;
+export default Job;
