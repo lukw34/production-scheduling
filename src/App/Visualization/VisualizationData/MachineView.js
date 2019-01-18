@@ -19,10 +19,12 @@ class MachineView extends React.Component {
 
     return (
       <div className="boxMachine">
-        <h1 className="machineTitle">
-          {this.state.name}
-        </h1>
-        <div className="allTaskBox tooltip">{taskList}</div>
+        <div className="machineView">
+          <h1 className="machineTitle">
+            {this.state.name}
+          </h1>
+          <div className="allTaskBox">{taskList}</div>
+        </div>
 
 
       </div>

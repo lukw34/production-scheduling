@@ -1,9 +1,10 @@
 .taskBox {
     background-color: rgb(128, 119, 243);
-    border: 3px solid rgba(63, 63, 63, 0.87);
+    /* border: 3px solid rgba(63, 63, 63, 0.87); */
     position:absolute;
     top: 18px;
     height: auto;
     text-align: center;
-    
+    text-overflow: clip;
+    overflow: hidden;
 }

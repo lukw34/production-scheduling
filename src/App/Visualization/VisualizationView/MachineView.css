@@ -12,4 +12,10 @@
 .allTaskBox {
     display: inline;
     position: absolute;
+    
+}
+
+.machineView {
+    background-color: rgb(59, 58, 58);
+    margin-bottom: 10px;
 }

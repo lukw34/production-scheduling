@@ -52,18 +52,22 @@ class ParametersBox extends React.Component {
   render() {
     return (
       <div className="borderDiv">
-        <Button text="Symulowane wyżarzanie" color="#ED8A3F" dispaly="inline" />
-        <Button text="Algorytm mrówkowy" color="#FFCC00" display="inline" />
-        <form onSubmit={this.handleSubmit}>
 
-          <p>Jobs count</p>
-          <Input type="number" name="jobs" value={this.state.jobsCount} onChange={this.handleJobsChange} />
-
-          <p>Machine count</p>
+        {/* <form onSubmit={this.handleSubmit}> */}
+        <div className="containerBox">
+          <span>Jobs count:</span>
+          <Input style={{ display: 'block' }} type="number" name="jobs" value={this.state.jobsCount} onChange={this.handleJobsChange} />
+        </div>
+        <div className="containerBox">
+          <span>Machine count:</span>
           <Input type="number" name="machine" value={this.state.machineCount} onChange={this.handleMachineChange} />
+        </div>
+        <div className="containerBox">
           {/* <input type="number" value={this.state.value} onChange={this.handleChange} /> */}
-          <Button text="Generate" color="#AEBD38" display="block" handleClick={this.handleGenerate} />
-        </form>
+          <Button text="Przeszukiwanie tabu" color="#ED8A3F" dispaly="inline" handleClick={this.handleGenerate} />
+          <Button text="Algorytm mrówkowy" color="#FFCC00" display="inline" handleClick={this.handleGenerate} />
+        </div>
+        {/* </form> */}
       </div>
 
     );
