@@ -14,20 +14,19 @@ class MachineView extends React.Component {
 
   render() {
     // eslint-disable-next-line react/destructuring-assignment
-    const taskList = this.state.taskInMachineList.map(task => <TaskInMachineView name={task.name} timeStart={task.timeStart} duration={task.duration} generatedColor={task.generatedColor} />);
+    const taskList = this.state.taskInMachineList.map(task => <TaskInMachineView name={task.name} timeStart={task.timeStart} duration={task.duration} />);
 
 
     return (
-      <div className="boxMachine">
-        <div className="machineView">
-          <h1 className="machineTitle">
-            {this.state.name}
-          </h1>
-          <div className="allTaskBox">{taskList}</div>
-        </div>
 
-
+      <div className="machineView">
+        <h1 className="machineTitle">
+          {this.state.name}
+        </h1>
+        <div className="allTaskBox">{taskList}</div>
       </div>
+
+
     );
   }
 }

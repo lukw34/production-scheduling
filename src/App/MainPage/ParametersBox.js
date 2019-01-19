@@ -62,11 +62,11 @@ class ParametersBox extends React.Component {
           <span>Machine count:</span>
           <Input type="number" name="machine" value={this.state.machineCount} onChange={this.handleMachineChange} />
         </div>
-        <div className="containerBox">
-          {/* <input type="number" value={this.state.value} onChange={this.handleChange} /> */}
-          <Button text="Przeszukiwanie tabu" color="#ED8A3F" dispaly="inline" handleClick={this.handleGenerate} />
-          <Button text="Algorytm mrówkowy" color="#FFCC00" display="inline" handleClick={this.handleGenerate} />
-        </div>
+
+        {/* <input type="number" value={this.state.value} onChange={this.handleChange} /> */}
+        <Button text="Przeszukiwanie tabu" color="#ED8A3F" dispaly="inline" handleClick={this.handleGenerate} />
+        <Button text="Algorytm mrówkowy" color="#FFCC00" display="inline" handleClick={this.handleGenerate} />
+
         {/* </form> */}
       </div>
 
