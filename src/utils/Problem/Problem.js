@@ -11,7 +11,7 @@ class Problem {
 
   allJobs = [];
 
-  jobSequence = [];
+  jobSequence = {};
 
   graph = null;
 
@@ -19,12 +19,15 @@ class Problem {
     this.machineJobs = [...this.machineJobs, jobs];
   };
 
-  addJobs = (jobs) => {
-    this.allJobs = [...this.allJobs, ...jobs];
+  setJobs = (jobs) => {
+    this.allJobs = jobs;
   };
 
-  addJobSequence = (jobs) => {
-    this.jobSequence = [...this.jobSequence, jobs];
+  addJobSequence = (jobId, jobs) => {
+    this.jobSequence = {
+      ...this.jobSequence,
+      [jobId]: jobs
+    };
   };
 
   setGraph = (graph) => {
@@ -32,22 +35,33 @@ class Problem {
   };
 
   getGraph = () => this.graph;
+  
+  getGraphCopy = () => this.graph.copy();
 
-  getJobs = () => this.allJobs;
+  getJobs = () => this.graph.getNodes();
 
-  getFirstAndLastFromEachJobSequence = () => this.jobSequence.reduce(({ first, last }, sequence) => {
-    first.set(sequence.firstElement().getId(), 0);
-    last.set(sequence.lastElement().getId(), 0);
-    return {
-      first,
-      last
-    };
-  }, {
-    last: new Map(),
-    first: new Map()
-  });
+  getFirstAndLastFromEachJobSequence = () => Object.keys(this.jobSequence)
+    .map(key => this.jobSequence[key])
+    .reduce(({ first, last }, sequence) => {
+      first.set(sequence.firstElement().getId(), 0);
+      last.set(sequence.lastElement().getId(), 0);
+      return {
+        first,
+        last
+      };
+    }, {
+      last: new Map(),
+      first: new Map()
+    });
 
   getNumberOfOperations = () => this.getGraph().getNodes().length;
+
+  getSuccessor = (job) => {
+    const [jobId, , index] = job.split(':');
+    return this.jobSequence[jobId][Number(index) + 1] || null;
+  };
+
+  getJob = jobId => this.allJobs[jobId];
 }
 
 export default Problem;

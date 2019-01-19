@@ -6,6 +6,14 @@ class Graph {
 
   edgeCount = 0;
 
+
+  constructor(map) {
+    if (map) {
+      this.data = new Map([...map].map(([value, edges]) => ([value, [...edges]])));
+      this.edgeCount = this.getAllEdges().length;
+    }
+  }
+
   addNode = (nodeName) => {
     this.data.set(nodeName, []);
   };
@@ -19,7 +27,7 @@ class Graph {
     this.addEdge(src, destination);
     this.addEdge(destination, src);
   };
-
+  
   getEdges = () => [...this.data.entries()].reduce((prev, [, edges]) => [...prev, ...edges], []);
 
   getEdgeCount = () => this.edgeCount;
@@ -32,16 +40,26 @@ class Graph {
 
   getNodes = () => [...this.data.keys()];
 
+  removeEdge = (nodeName, destination) => {
+    this.data.set(nodeName, this.getEdgesFromNode(nodeName)
+      .filter(node => !node.getDestination().isEqual(destination)));
+  };
+
   getAllEdges = () => [].concat(...[...this.data.entries()].map(([, el]) => el));
 
   static startNode = new Task('start', 0, null);
 
   static finishNode = new Task('finish', 0, null);
-  
+
   getAdjacencyList = () => this.getNodes().reduce((prev, current) => ({
     ...prev,
-    [current]: this.getEdgesFromNode(current).map(edge => edge.getDestination().getId())
+    [current]: this.getEdgesFromNode(current).map(edge => ({
+      id: edge.getDestination().getId(),
+      cost: edge.getDestination().getTime() + edge.getSrc().getTime()
+    }))
   }), {});
+
+  copy = () => new Graph(this.data);
 }
 
 

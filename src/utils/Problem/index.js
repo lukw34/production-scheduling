@@ -7,13 +7,6 @@ const connectTaskOnTheSameMachine = (graph, machineIds, tasks, problemDefinition
   const machineJobs = machineIds
     .map(machineId => nodes.filter(nodeName => nodeName.split(':')[1] === machineId));
   problemDefinition.addMachineJobs(machineJobs);
-  machineJobs.forEach((machineTasks) => {
-    const processedTasks = [...machineTasks];
-    while (processedTasks.length > 1) {
-      const coreTask = processedTasks.shift();
-      processedTasks.forEach(task => graph.addBidirectionalEdge(tasks[task], tasks[coreTask]));
-    }
-  });
 };
 
 const parseOneJob = (tasks, graph) => {
@@ -29,7 +22,6 @@ const generateDisjunctiveGraph = (dataSet) => {
   const graph = new Graph();
   const machineIds = new Set();
   const problemDefinition = new Problem();
-  problemDefinition.addJobs([Graph.startNode]);
   const jobObj = {};
   graph.addNode(Graph.startNode.getId());
   graph.addNode(Graph.finishNode.getId());
@@ -42,13 +34,14 @@ const generateDisjunctiveGraph = (dataSet) => {
         jobObj[jobId] = job;
         return job;
       });
-    problemDefinition.addJobs(jobs);
-    problemDefinition.addJobs([Graph.finishNode]);
-    problemDefinition.addJobSequence(jobs);
+    problemDefinition.addJobSequence(key, jobs);
     parseOneJob(jobs, graph);
   });
+  jobObj[Graph.startNode.getId()] = Graph.startNode;
+  jobObj[Graph.finishNode.getId()] = Graph.finishNode;
   connectTaskOnTheSameMachine(graph, [...machineIds], jobObj, problemDefinition);
   problemDefinition.setGraph(graph);
+  problemDefinition.setJobs(jobObj);
   return problemDefinition;
 };
 

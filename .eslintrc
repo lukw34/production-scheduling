@@ -16,6 +16,7 @@
     "expect": true
   },
   "rules": {
+    "no-loop-func": [0],
     "max-len": [0],
     "eol-last": [0],
     "comma-dangle": [0],

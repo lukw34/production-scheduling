@@ -18,14 +18,14 @@ class Job {
   getTime = () => this.time;
 
   setMakespan = (makespan) => {
-    this.makespan += makespan;
+    this.makespan = makespan;
   };
 
   resetMakespan = () => {
     this.makespan = 0;
   };
 
-  getMakespan = () => this.makespan + this.time;
+  getMakeSpan = () => this.makespan + this.time;
 
   isEqual = (candidate) => {
     if (typeof candidate === 'string' || candidate instanceof String) {
@@ -38,6 +38,8 @@ class Job {
 
     return candidate.getId() === this.id;
   }
+  
+  getMachine = () => this.getId().split(':')[1]
 }
 
 export default Job;

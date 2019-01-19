@@ -38,11 +38,15 @@ describe('Problem', () => {
     expect(graph.getEdge('job2:M2:1', 'job2:M1:2')).not.toBeNull();
     expect(graph.getEdge('job2:M1:2', 'job2:M2:1')).toBeNull();
     expect(graph.getEdge('job2:M0:0', 'job3:M2:1')).toBeNull();
-    expect(graph.getEdge('job3:M2:1', 'job2:M2:1')).not.toBeNull();
-    expect(graph.getEdge('job1:M0:0', 'job2:M0:0')).not.toBeNull();
-    expect(graph.getEdge('job3:M1:0', 'job2:M1:2')).not.toBeNull();
+    // expect(graph.getEdge('job3:M2:1', 'job2:M2:1')).not.toBeNull();
+    // expect(graph.getEdge('job2:M2:1', 'job3:M2:1')).not.toBeNull();
+    // expect(graph.getEdge('job1:M0:0', 'job2:M0:0')).not.toBeNull();
+    // expect(graph.getEdge('job3:M1:0', 'job2:M1:2')).not.toBeNull();
     expect(graph.getEdge('start', 'finish')).toBeNull();
-
-    expect(graph.getEdgeCount()).toBe(25);
+    graph.addBidirectionalEdge(problem.getJob('job3:M2:1'), problem.getJob('job2:M2:1'));
+    graph.removeEdge('job3:M2:1', 'job2:M2:1');
+    expect(graph.getEdge('job3:M2:1', 'job2:M2:1')).toBeNull();
+    expect(graph.getEdge('job2:M2:1', 'job3:M2:1')).not.toBeNull();
+    expect(graph.getEdgeCount()).toBe(13);
   });
 });
