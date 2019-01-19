@@ -1,0 +1,20 @@
+.machineTitle{
+    margin: 0 5px 10px 0 ;
+    padding: 5px 5px 5px 5px;
+    display: inline-block;
+    background-color: rgb(59, 58, 58);
+}
+
+
+.allTaskBox {
+    display: inline;
+    position: absolute;
+    /* background-color: rgb(59, 58, 58); */
+}
+
+.machineView {
+    /* background-color: rgb(59, 58, 58); */
+    margin-bottom: 10px;
+    max-width: auto;
+    
+}
