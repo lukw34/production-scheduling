@@ -1,7 +1,7 @@
-import Solution from '../Problem/Solution';
+import Solution from './Solution';
 
 class Move {
-  inversion = []
+  inversion = [];
 
   constructor(candidate1, candidate2) {
     this.inversion = [candidate1, candidate2];

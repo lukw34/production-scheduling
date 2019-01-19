@@ -5,8 +5,6 @@ class Job {
 
   machine;
 
-  makespan = 0;
-
   constructor(id, time, machine) {
     this.time = time;
     this.id = id;
@@ -16,16 +14,6 @@ class Job {
   getId = () => this.id;
 
   getTime = () => this.time;
-
-  setMakespan = (makespan) => {
-    this.makespan = makespan;
-  };
-
-  resetMakespan = () => {
-    this.makespan = 0;
-  };
-
-  getMakeSpan = () => this.makespan + this.time;
 
   isEqual = (candidate) => {
     if (typeof candidate === 'string' || candidate instanceof String) {
@@ -37,8 +25,8 @@ class Job {
     }
 
     return candidate.getId() === this.id;
-  }
-  
+  };
+
   getMachine = () => this.getId().split(':')[1]
 }
 

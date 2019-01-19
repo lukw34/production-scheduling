@@ -35,7 +35,7 @@ class Problem {
   };
 
   getGraph = () => this.graph;
-  
+
   getGraphCopy = () => this.graph.copy();
 
   getJobs = () => this.graph.getNodes();

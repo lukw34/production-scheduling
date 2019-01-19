@@ -1,6 +1,6 @@
 import topologicalSort from '../TopologicalSort/index';
 import Graph from './Graph';
-import Move from '../TabuSearch/Move';
+import Move from './Move';
 
 class Solution {
   schedule = {};
@@ -38,8 +38,8 @@ class Solution {
     [actual]: [...this.schedule[actual] || []]
   }), {});
 
-  getAdjacencyRepresentation = () => {
-    const list = this.solutionGraph.getAdjacencyList();
+  getAdjacencyRepresentation = (costCallback = edge => edge.getDestination().getTime() + edge.getSrc().getTime()) => {
+    const list = this.solutionGraph.getAdjacencyList(costCallback);
     return Object.keys(list).reduce((prev, key) => ({
       ...prev,
       [key]: list[key].map(({ id: job, cost }) => ({ id: job, duration: cost / 2 }))

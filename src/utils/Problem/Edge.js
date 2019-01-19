@@ -9,7 +9,7 @@ class Edge {
   }
 
   getDestination = () => this.destination;
-  
+
   getSrc = () => this.src;
 
   isEqualDestination = destinationToCheck => this.destination.isEqual(destinationToCheck);

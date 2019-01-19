@@ -28,15 +28,11 @@ class Graph {
     this.addEdge(destination, src);
   };
   
-  getEdges = () => [...this.data.entries()].reduce((prev, [, edges]) => [...prev, ...edges], []);
-
   getEdgeCount = () => this.edgeCount;
 
   getEdge = (src, destination) => (this.data.get(src) || []).filter(edge => edge.isEqualDestination(destination))[0] || null;
 
   getEdgesFromNode = nodeName => [...this.data.get(nodeName)];
-
-  getSize = () => this.data.size;
 
   getNodes = () => [...this.data.keys()];
 
@@ -51,11 +47,11 @@ class Graph {
 
   static finishNode = new Task('finish', 0, null);
 
-  getAdjacencyList = () => this.getNodes().reduce((prev, current) => ({
+  getAdjacencyList = costCalculation => this.getNodes().reduce((prev, current) => ({
     ...prev,
     [current]: this.getEdgesFromNode(current).map(edge => ({
       id: edge.getDestination().getId(),
-      cost: edge.getDestination().getTime() + edge.getSrc().getTime()
+      cost: costCalculation(edge)
     }))
   }), {});
 
