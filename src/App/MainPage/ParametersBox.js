@@ -16,11 +16,11 @@ class ParametersBox extends React.Component {
       tabuSize: '40',
       maxIteration: '30',
       maxIterationWithoutImprovement: '20',
-      initialTemp: '10000',
-      coolingRate: '0.003',
+      initialTemp: '100',
+      coolingRate: '0.03',
       minTemp: '1',
       solution: '',
-      generatedData: {}
+      generatedData: null
     };
     this.handleMachineChange = this.handleMachineChange.bind(this);
     this.handleJobsChange = this.handleJobsChange.bind(this);
@@ -83,11 +83,11 @@ class ParametersBox extends React.Component {
         jobs[`job${i}`][j] = { machineId: `M${j}`, time: drawTimeDurationJobsInMachine };
       }
     }
+    console.log(jobs)
     this.setState({ generatedData: jobs });
   }
 
   handleGenerate(event) {
-    console.log(this.state.showOption);
 
     if (this.state.showOption === 'tabuSearch') {
       const tabuSearchSolution = tabuSearch(this.state.generatedData, {
@@ -208,7 +208,7 @@ class ParametersBox extends React.Component {
           </div>
           {option}
           <Button text="Generate" display="block" onClick={this.generateObject} />
-          <Button text="Start algorithm" display="block" onClick={this.handleGenerate} />
+          <Button text="Start algorithm" display="block" disabled={!this.state.generatedData} onClick={this.handleGenerate} />
         </div>
         {visualization}
       </div>

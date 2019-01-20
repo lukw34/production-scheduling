@@ -4,8 +4,7 @@ import TaskInMachineView from './TaskInMachineView';
 import '../VisualizationView/MachineView.css';
 
 class MachineView extends React.Component {
-
-
+  
   render() {
     // eslint-disable-next-line react/destructuring-assignment
     const taskList = this.props.taskInMachineList.map(task => <TaskInMachineView name={task.name} timeToStart={task.timeToStart} duration={task.duration} />);

@@ -21,6 +21,10 @@ class Visualization extends React.Component {
           Execution time: &nbsp;
           {this.props.machineList.executionTime}
         </p>
+        <p>
+          Makespan: &nbsp;
+          {this.props.machineList.cost}
+        </p>
 
 
         {machineList}
