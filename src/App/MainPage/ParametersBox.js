@@ -79,7 +79,7 @@ class ParametersBox extends React.Component {
       jobs[`job${i}`] = [];
       const drawCountMachineIntoJobs = this.state.machineCount;
       for (let j = 0; j < drawCountMachineIntoJobs; j++) {
-        const drawTimeDurationJobsInMachine = this.drawCount(500);
+        const drawTimeDurationJobsInMachine = this.drawCount(15);
         jobs[`job${i}`][j] = { machineId: `M${j}`, time: drawTimeDurationJobsInMachine };
       }
     }
