@@ -196,7 +196,7 @@ class ParametersBox extends React.Component {
     return (
       <div>
         <div className="borderDiv">
-          <Button text="Przeszukiwanie tabu" color="#ED8A3F" display="inline" onClick={this.handleTabuSearchClick} />
+          <Button text="Tabu search" color="#ED8A3F" display="inline" onClick={this.handleTabuSearchClick} />
           <Button text="Simulated Annealing" color="#FFCC00" display="inline" onClick={this.handleSimulatedAnnealingClick} />
 
           <div className="containerBox">
