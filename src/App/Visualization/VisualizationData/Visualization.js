@@ -11,23 +11,22 @@ class Visualization extends React.Component {
     };
   }
 
-  // componentWillMount() {
-  //   this.generateColor();
-  // }
-
-  // generateColor() {
-  //   const renderColor = Math.random().toString(16).substr(-6);
-  //   const hexColor = `#${renderColor}`;
-  //   // this.setState({
-  //   //   generatedColor: hexColor
-  //   // });
-  // }
 
   render() {
-    const machineList = this.state.machineList.map((machine) => (<MachineView key={machine.toString()} name={machine.name} taskInMachineList={machine.taskInMachineList} />));
-    console.log(this.state.machineList);
+
+    const machineList = this.props.machineList.data.map(machine => (<MachineView key={machine.toString()} name={machine.name} taskInMachineList={machine.taskInMachineList} />));
     return (
       <div className="boxVisualization">
+        <p>
+          Execution time: &nbsp;
+          {this.props.machineList.executionTime}
+        </p>
+        <p>
+          Makespan: &nbsp;
+          {this.props.machineList.cost}
+        </p>
+
+
         {machineList}
       </div>
     );

@@ -9,7 +9,7 @@ class TaskInMachineView extends React.Component {
     super(props);
     this.state = {
       name: props.name,
-      startTime: props.timeStart,
+      startTime: props.timeToStart,
       duration: props.duration
     };
   }
@@ -22,7 +22,7 @@ class TaskInMachineView extends React.Component {
 
 
   render() {
-    while (!colorArray[this.state.name]) {
+    while (!colorArray[this.props.name]) {
       const generatedColor = this.generateColor();
       let isColorUsed = false;
       for (const key in colorArray) {
@@ -32,15 +32,16 @@ class TaskInMachineView extends React.Component {
         }
       }
       if (!isColorUsed) {
-        colorArray[this.state.name] = generatedColor;
+        colorArray[this.props.name] = generatedColor;
       }
     }
     return (
+      <span style={{ width: this.props.duration * 15, left: this.props.timeToStart * 15, background: colorArray[this.props.name] }} className="taskBox">
 
+        {this.props.name}
+        :
+        {this.props.duration}
 
-      <span style={{ width: this.state.duration, left: this.state.startTime, background: colorArray[this.state.name] }} className="taskBox">
-        {' '}
-        {this.state.name}
       </span>
 
     );
@@ -48,7 +49,7 @@ class TaskInMachineView extends React.Component {
 }
 TaskInMachineView.propTypes = {
   name: PropTypes.string.isRequired,
-  timeStart: PropTypes.number.isRequired,
+  timeToStart: PropTypes.number.isRequired,
   duration: PropTypes.number.isRequired
 };
 

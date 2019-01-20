@@ -1,9 +1,15 @@
 .taskBox {
     background-color: rgb(128, 119, 243);
     position:absolute;
-    top: 18px;
-    height: auto;
+    top: 0px;
+    height: 35px;
+    padding-top:14px;
     text-align: center;
     text-overflow: clip;
     overflow: hidden;
+}
+
+p{
+    font-size: 17px;
+    font-weight: 700;
 }
