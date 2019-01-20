@@ -1,4 +1,6 @@
-import { tabuSearch } from './getJSSSolution';
+import { tabuSearch, simulatedAnnealing } from './getJSSSolution';
+import dataset from './JSSProblem';
+
 
 describe('get solution', () => {
   it('in correct format', () => {
@@ -56,6 +58,7 @@ describe('get solution', () => {
         time: 2
       }]
     };
+
     expect(tabuSearch(data).data[0].taskInMachineList).toEqual([{
       jobId: 'job0:M0:0', name: 'job0', duration: 3, timeToStart: 0
     },

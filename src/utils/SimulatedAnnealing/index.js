@@ -9,7 +9,7 @@ const isAcceptedSolution = (energy, newEnergy, temperature) => (newEnergy < ener
 export const getInitialSolution = getSolution;
 
 export const simulatedAnnealing = (problem, {
-  initialTemp = 10000,
+  initialTemp = 100,
   coolingRate = 0.003,
   minTemp = 1
 } = {}) => {
