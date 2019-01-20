@@ -24,10 +24,7 @@ class Visualization extends React.Component {
   // }
 
   render() {
-    const machineList = this.state.machineList.map((machine) => {
-      console.log(machine);
-      return (<MachineView key={machine.toString()} name={machine.name} taskInMachineList={machine.taskInMachineList} />);
-    });
+    const machineList = this.state.machineList.map((machine) => (<MachineView key={machine.toString()} name={machine.name} taskInMachineList={machine.taskInMachineList} />));
     console.log(this.state.machineList);
     return (
       <div className="boxVisualization">

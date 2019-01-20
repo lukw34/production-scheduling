@@ -28,7 +28,6 @@ class TaskInMachineView extends React.Component {
       for (const key in colorArray) {
         if (colorArray[key] === generatedColor) {
           isColorUsed = true;
-          console.log('Saaame');
           break;
         }
       }
