@@ -19,7 +19,7 @@ class Visualization extends React.Component {
       <div className="boxVisualization">
         <p>
           Execution time: &nbsp;
-          {this.props.machineList.executionTime}
+          {this.props.machineList.executionTime.toFixed(2)} ms
         </p>
         <p>
           Makespan: &nbsp;
