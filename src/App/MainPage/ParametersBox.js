@@ -87,6 +87,7 @@ class ParametersBox extends React.Component {
   }
 
   handleGenerate(event) {
+    console.log(this.state.showOption);
 
     if (this.state.showOption === 'tabuSearch') {
       const tabuSearchSolution = tabuSearch(this.state.generatedData, {

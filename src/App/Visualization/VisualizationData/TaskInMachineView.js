@@ -36,7 +36,7 @@ class TaskInMachineView extends React.Component {
       }
     }
     return (
-      <span style={{ width: this.props.duration, left: this.props.timeToStart, background: colorArray[this.props.name] }} className="taskBox">
+      <span style={{ width: this.props.duration * 15, left: this.props.timeToStart * 15, background: colorArray[this.props.name] }} className="taskBox">
 
         {this.props.name}
         :
