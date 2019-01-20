@@ -1,6 +1,7 @@
 
 {
   "extends": ["eslint:recommended", "airbnb"],
+  "parser": "babel-eslint",
   "env": {
     "es6": true
   },
@@ -9,9 +10,14 @@
     "jsx-a11y"
   ],
   "globals": {
-    "document": true
+    "document": true,
+    "describe": true,
+    "it": true,
+    "expect": true,
+    "performance": true
   },
   "rules": {
+    "no-loop-func": [0],
     "max-len": [0],
     "eol-last": [0],
     "comma-dangle": [0],
@@ -20,6 +26,6 @@
     "indent": ["error", 2, { "SwitchCase": 1 }]
   },
   "parserOptions": {
-    "ecmaVersion": 6
+    "ecmaVersion": 2016
   }
 }
