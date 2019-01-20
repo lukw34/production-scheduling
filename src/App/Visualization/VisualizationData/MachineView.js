@@ -4,24 +4,25 @@ import TaskInMachineView from './TaskInMachineView';
 import '../VisualizationView/MachineView.css';
 
 class MachineView extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: props.name,
-      taskInMachineList: props.taskInMachineList
-    };
-  }
+
 
   render() {
     // eslint-disable-next-line react/destructuring-assignment
-    const taskList = this.state.taskInMachineList.map(task => <TaskInMachineView name={task.name} timeStart={task.timeStart} duration={task.duration} />);
+    const taskList = this.props.taskInMachineList.map(task => <TaskInMachineView name={task.name} timeToStart={task.timeToStart} duration={task.duration} />);
+    let duration = 0;
+    for (const task in this.props.taskInMachineList) {
+      if (typeof this.props.taskInMachineList[task].duration !== 'undefined') duration += this.props.taskInMachineList[task].duration;
+    }
 
 
     return (
 
       <div className="machineView">
         <h1 className="machineTitle">
-          {this.state.name}
+          {this.props.name}
+          :
+          {' '}
+          {duration}
         </h1>
         <div className="allTaskBox">{taskList}</div>
       </div>

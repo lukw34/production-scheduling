@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import MainComponent from './App/MainComponent/MainComponent';
+import ParametersBox from './App/MainPage/ParametersBox';
 
 ReactDOM.render(
   <div>
-    <MainComponent />
+    <ParametersBox />
   </div>, document.getElementById('root')
 );

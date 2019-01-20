@@ -3,20 +3,23 @@ import './StyleMainPage/ParametersBox.css';
 import Button from './Button';
 // import Text from './Text';
 import Input from './Input';
+import { tabuSearch, simulatedAnnealing } from '../../utils/getJSSSolution';
+import Visualization from '../Visualization/VisualizationData/Visualization';
 
 class ParametersBox extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       machineCount: '2',
-      jobsCount: '66',
+      jobsCount: '4',
       showOption: 'tabuSearch',
       tabuSize: '40',
       maxIteration: '30',
       maxIterationWithoutImprovement: '20',
       initialTemp: '10000',
       coolingRate: '0.003',
-      minTemp: '1'
+      minTemp: '1',
+      solution: ''
     };
     this.handleMachineChange = this.handleMachineChange.bind(this);
     this.handleJobsChange = this.handleJobsChange.bind(this);
@@ -29,6 +32,15 @@ class ParametersBox extends React.Component {
     this.handleMinTempChange = this.handleMinTempChange.bind(this);
     this.handleTabuSearchClick = this.handleTabuSearchClick.bind(this);
     this.handleSimulatedAnnealingClick = this.handleSimulatedAnnealingClick.bind(this);
+  }
+
+  componentWillMount() {
+    const tabuSearchSolution = tabuSearch(this.generateObject(), {
+      tabuSize: this.state.tabuSize,
+      maxIteration: this.state.maxIteration,
+      maxIterationWithoutImprovement: this.state.maxIterationWithoutImprovement
+    });
+    this.setState({ solution: tabuSearchSolution });
   }
 
   handleMachineChange(event) {
@@ -75,15 +87,35 @@ class ParametersBox extends React.Component {
       jobs[`job${i}`] = [];
       const drawCountMachineIntoJobs = this.state.machineCount;
       for (let j = 0; j < drawCountMachineIntoJobs; j++) {
-        const drawTimeDurationJobsInMachine = this.drawCount(15);
+        const drawTimeDurationJobsInMachine = this.drawCount(500);
         jobs[`job${i}`][j] = { machineId: `M${j}`, time: drawTimeDurationJobsInMachine };
       }
     }
-    console.log(jobs);
+    return jobs;
+  }
+
+  getParameters() {
+
   }
 
   handleGenerate(event) {
-    this.generateObject();
+
+    if (this.state.showOption === 'tabuSearch') {
+      const tabuSearchSolution = tabuSearch(this.generateObject(), {
+        tabuSize: this.state.tabuSize,
+        maxIteration: this.state.maxIteration,
+        maxIterationWithoutImprovement: this.state.maxIterationWithoutImprovement
+      });
+      this.setState({ solution: tabuSearchSolution });
+    } else {
+      const simulatedAnnealingSolution = simulatedAnnealing(this.generateObject(), {
+        initialTemp: this.state.initialTemp,
+        coolingRate: this.state.coolingRate,
+        minTemp: this.state.minTemp
+      });
+      this.setState({ solution: simulatedAnnealingSolution });
+
+    }
     event.preventDefault();
   }
 
@@ -97,6 +129,7 @@ class ParametersBox extends React.Component {
 
   render() {
     let option;
+    let visualization;
     if (this.state.showOption === 'tabuSearch') {
       option = (
         <div className="containerBox">
@@ -133,7 +166,7 @@ class ParametersBox extends React.Component {
     } else {
       option = (
         <div className="containerBox">
-          <span>Tabu size:</span>
+          <span>Initial temperature:</span>
           <Input
             style={{ display: 'block' }}
             type="number"
@@ -142,7 +175,7 @@ class ParametersBox extends React.Component {
             onChange={this.handleInitialTempChange}
           />
 
-          <span>Max iteration:</span>
+          <span>Cooling rate: </span>
           <Input
             style={{ display: 'block' }}
             type="number"
@@ -152,7 +185,7 @@ class ParametersBox extends React.Component {
           />
 
 
-          <span>Max iteration without improvement</span>
+          <span>Minimum temperature</span>
           <Input
             style={{ display: 'block' }}
             type="number"
@@ -161,23 +194,34 @@ class ParametersBox extends React.Component {
             onChange={this.handleMinTempChange}
           />
 
+
         </div>
       );
+
+
+    }
+    console.log(this.state.solution);
+    if (this.state.solution) {
+
+      visualization = <Visualization machineList={this.state.solution} />;
     }
     return (
-      <div className="borderDiv">
-        <Button text="Przeszukiwanie tabu" color="#ED8A3F" display="inline" onClick={this.handleTabuSearchClick} />
-        <Button text="Simulated Annealing" color="#FFCC00" display="inline" onClick={this.handleSimulatedAnnealingClick} />
+      <div>
+        <div className="borderDiv">
+          <Button text="Przeszukiwanie tabu" color="#ED8A3F" display="inline" onClick={this.handleTabuSearchClick} />
+          <Button text="Simulated Annealing" color="#FFCC00" display="inline" onClick={this.handleSimulatedAnnealingClick} />
 
-        <div className="containerBox">
-          <span>Machine count:</span>
-          <Input type="number" name="machine" value={this.state.machineCount} onChange={this.handleMachineChange} />
-          <span>Jobs count:</span>
-          <Input style={{ display: 'block' }} type="number" name="jobs" value={this.state.jobsCount} onChange={this.handleJobsChange} />
+          <div className="containerBox">
+            <span>Machine count:</span>
+            <Input type="number" name="machine" value={this.state.machineCount} onChange={this.handleMachineChange} />
+            <span>Jobs count:</span>
+            <Input style={{ display: 'block' }} type="number" name="jobs" value={this.state.jobsCount} onChange={this.handleJobsChange} />
+          </div>
+          {option}
+          <Button text="Generate" display="block" onClick={this.handleGenerate} />
+
         </div>
-        {option}
-        <Button text="Generate" display="block" onClick={this.handleGenerate} />
-
+        <Visualization machineList={this.state.solution} />
       </div>
     );
   }
