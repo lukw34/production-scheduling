@@ -74,21 +74,22 @@ class ParametersBox extends React.Component {
 
   generateObject() {
     const jobs = {};
-    const jobsCount = this.state.jobsCount;
+    const { jobsCount, machineCount } = this.state;
+    const possibleMachines = new Set([...new Array(Number(machineCount))].map((_, index) => `M${index}`));
     for (let i = 1; i <= jobsCount; i++) {
       jobs[`job${i}`] = [];
-      const drawCountMachineIntoJobs = this.state.machineCount;
-      for (let j = 0; j < drawCountMachineIntoJobs; j++) {
+      const machinesToSet = new Set(possibleMachines);
+      for (let j = 0; j < machineCount; j++) {
         const drawTimeDurationJobsInMachine = this.drawCount(15);
-        jobs[`job${i}`][j] = { machineId: `M${j}`, time: drawTimeDurationJobsInMachine };
+        const machineId = [...machinesToSet][Math.floor(Math.random() * machinesToSet.size)];
+        machinesToSet.delete(machineId);
+        jobs[`job${i}`][j] = { machineId, time: drawTimeDurationJobsInMachine };
       }
     }
-    console.log(jobs)
     this.setState({ generatedData: jobs });
   }
 
   handleGenerate(event) {
-
     if (this.state.showOption === 'tabuSearch') {
       const tabuSearchSolution = tabuSearch(this.state.generatedData, {
         tabuSize: this.state.tabuSize,

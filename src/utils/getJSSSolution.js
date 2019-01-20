@@ -1,6 +1,6 @@
 import generateProblem from './Problem';
-import {tabuSearch as tabuSearchImpl} from './TabuSearch';
-import {simulatedAnnealing as simulatedAnnealingImpl} from './SimulatedAnnealing';
+import { tabuSearch as tabuSearchImpl } from './TabuSearch';
+import { simulatedAnnealing as simulatedAnnealingImpl } from './SimulatedAnnealing';
 
 const getSolution = (algorithm, dataset, parameters = {}) => {
   const startTime = performance.now();
