@@ -4,9 +4,9 @@ import TabuList from './TabuList';
 export const getInitialSolution = getSolution;
 
 export const tabuSearch = (problem, {
-  tabuSize = 8,
-  maxIteration = 20,
-  maxIterationWithoutImprovements = 20
+  tabuSize = 10,
+  maxIteration = 200,
+  maxIterationWithoutImprovements = 30
 } = {}) => {
   const initialSolution = getInitialSolution(problem);
   let { cost: bestCost } = initialSolution.getSolutionCost();

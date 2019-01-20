@@ -8,6 +8,7 @@ const getSolution = (algorithm, dataset, parameters = {}) => {
   const solution = algorithm(problem, parameters);
   const endTime = performance.now();
   const schedule = solution.getSchedule();
+  const { cost } = solution.getSolutionCost();
   const data = Object.keys(schedule).map(key => ({
     name: key,
     taskInMachineList: schedule[key].reduce((prev, job, index) => {
@@ -26,7 +27,8 @@ const getSolution = (algorithm, dataset, parameters = {}) => {
   const executionTime = endTime - startTime;
   return {
     executionTime,
-    data
+    data,
+    cost
   };
 };
 
