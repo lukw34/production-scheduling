@@ -19,7 +19,8 @@ class ParametersBox extends React.Component {
       initialTemp: '10000',
       coolingRate: '0.003',
       minTemp: '1',
-      solution: ''
+      solution: '',
+      generatedData: {}
     };
     this.handleMachineChange = this.handleMachineChange.bind(this);
     this.handleJobsChange = this.handleJobsChange.bind(this);
@@ -32,15 +33,7 @@ class ParametersBox extends React.Component {
     this.handleMinTempChange = this.handleMinTempChange.bind(this);
     this.handleTabuSearchClick = this.handleTabuSearchClick.bind(this);
     this.handleSimulatedAnnealingClick = this.handleSimulatedAnnealingClick.bind(this);
-  }
-
-  componentWillMount() {
-    const tabuSearchSolution = tabuSearch(this.generateObject(), {
-      tabuSize: this.state.tabuSize,
-      maxIteration: this.state.maxIteration,
-      maxIterationWithoutImprovement: this.state.maxIterationWithoutImprovement
-    });
-    this.setState({ solution: tabuSearchSolution });
+    this.generateObject = this.generateObject.bind(this);
   }
 
   handleMachineChange(event) {
@@ -81,7 +74,6 @@ class ParametersBox extends React.Component {
 
   generateObject() {
     const jobs = {};
-
     const jobsCount = this.state.jobsCount;
     for (let i = 1; i <= jobsCount; i++) {
       jobs[`job${i}`] = [];
@@ -91,31 +83,27 @@ class ParametersBox extends React.Component {
         jobs[`job${i}`][j] = { machineId: `M${j}`, time: drawTimeDurationJobsInMachine };
       }
     }
-    return jobs;
-  }
-
-  getParameters() {
-
+    this.setState({ generatedData: jobs });
   }
 
   handleGenerate(event) {
 
     if (this.state.showOption === 'tabuSearch') {
-      const tabuSearchSolution = tabuSearch(this.generateObject(), {
+      const tabuSearchSolution = tabuSearch(this.state.generatedData, {
         tabuSize: this.state.tabuSize,
         maxIteration: this.state.maxIteration,
         maxIterationWithoutImprovement: this.state.maxIterationWithoutImprovement
       });
       this.setState({ solution: tabuSearchSolution });
-    } else {
-      const simulatedAnnealingSolution = simulatedAnnealing(this.generateObject(), {
+    } else if (this.state.showOption === 'simulatedAnnealing') {
+      const simulatedAnnealingSolution = simulatedAnnealing(this.state.generatedData, {
         initialTemp: this.state.initialTemp,
         coolingRate: this.state.coolingRate,
         minTemp: this.state.minTemp
       });
       this.setState({ solution: simulatedAnnealingSolution });
-
     }
+    console.log(this.state.solution);
     event.preventDefault();
   }
 
@@ -200,7 +188,7 @@ class ParametersBox extends React.Component {
 
 
     }
-    console.log(this.state.solution);
+    // console.log(this.state.solution);
     if (this.state.solution) {
 
       visualization = <Visualization machineList={this.state.solution} />;
@@ -218,10 +206,10 @@ class ParametersBox extends React.Component {
             <Input style={{ display: 'block' }} type="number" name="jobs" value={this.state.jobsCount} onChange={this.handleJobsChange} />
           </div>
           {option}
-          <Button text="Generate" display="block" onClick={this.handleGenerate} />
-
+          <Button text="Generate" display="block" onClick={this.generateObject} />
+          <Button text="Start algorithm" display="block" onClick={this.handleGenerate} />
         </div>
-        <Visualization machineList={this.state.solution} />
+        {visualization}
       </div>
     );
   }
